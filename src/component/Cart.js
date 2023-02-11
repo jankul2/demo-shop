@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector,connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { totalPrice } from '../services/helper';
-import {setCoupan} from '../redux/action'
+import {setCoupan,removeCoupan} from '../redux/action'
 function Cart(props) {
   const displatch = useDispatch();
+  const coupanDetails = useSelector(state => state.handleCoupan);
   const [coupanCode,setCoupanCode]=useState();
   const cartDetails = useSelector(state => state.handleCart);
-  //console.log('cartDetails',cartDetails)
+  const [total,setTotal]=useState(totalPrice(cartDetails));
   let appyCoupan=()=>{
-    displatch(setCoupan({coupan:coupanCode}))
+    displatch(setCoupan({coupan:coupanCode,cost:0}))
+    setCoupanCode(''); 
   }
+  let removeCoupanCode=()=>{
+    displatch(removeCoupan());
+  }
+  useEffect(()=>{
+    setTotal(totalPrice(cartDetails));
+  },[coupanDetails])
+
    const BlanckCart = () => {
     return (
       <>
@@ -76,19 +85,21 @@ function Cart(props) {
               </div>
               {/* / Shopping cart table */}
               <div className="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                <div className="mt-4">
-                  <label className="text-muted font-weight-normal">Promocode</label>
-                  <input type="text" placeholder="coupan code" className="form-control" autoFocus="autoFocus" value={coupanCode} onChange={(e)=>setCoupanCode(e.target.value)} />
-                  <button className='btn btn-outline-dark' onClick={()=>appyCoupan()}>Apply coupan</button>
+                <div className="d-flex">
+                <div className="text-left mt-4 me-5">
+                {coupanDetails.cost && <p>Coupan Code: <i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}<button onClick={()=>removeCoupanCode()} className='ms-2 fa fa-close'></button></p>}
+                  <input type="text" placeholder="coupan code" className="coupan py-2 border-1 rounded mr-2" autoFocus="autoFocus" value={coupanCode} onChange={(e)=>setCoupanCode(e.target.value)} />
+                  <button disabled ={coupanDetails.cost > 0}className='btn btn-outline-dark me-2' onClick={()=>appyCoupan()}>Apply coupan</button>
+                </div>
                 </div>
                 <div className="d-flex">
-                  <div className="text-right mt-4 mr-5">
+                 {coupanDetails.cost && (<div className="text-right mt-4 mr-5">
                     <label className="text-muted font-weight-normal me-5">Discount</label>
-                    <div className="text-large"><strong>$20</strong></div>
-                  </div>
+                    <div className="text-large"><strong><i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}</strong></div>
+                  </div>)}
                   <div className="text-right mt-4">
                     <label className="text-muted font-weight-normal m-0">Total price</label>
-                    <div className="text-large"><strong><i className="fa fa-inr" aria-hidden="true"></i>{totalPrice(cartDetails)}</strong></div>
+                    <div className="text-large"><strong><i className="fa fa-inr" aria-hidden="true"></i>{total}</strong></div>
                   </div>
                 </div>
               </div>

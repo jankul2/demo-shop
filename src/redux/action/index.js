@@ -31,9 +31,8 @@ export const setCoupan=(coupan)=>{
         payload:coupan
     }
 }
-export const getCoupan=(coupan)=>{
+export const removeCoupan=()=>{
     return {
-        type:"getCoupan",
-        payload:coupan
+        type:"deleteCoupan",
     }
 }
