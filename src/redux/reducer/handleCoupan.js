@@ -18,8 +18,8 @@ export const handleCoupan = (state = coupan, action) => {
 }
 function getCoupanPrice(code) {
     console.log('code', code)
-    if (code == 'abcd') {
-        return 22;
+    if (code == 'test') {
+        return 10;
     } else {
         return false;
     }

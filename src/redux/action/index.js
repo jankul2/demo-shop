@@ -7,18 +7,13 @@ export const addCart=(product)=>{
 }
 //for delete item from cart
 
-export const IncQty=(product)=>{
+export const updateQty=(product,qty)=>{
     return {
-        type:"IncQty",
-        payload:product
+        type:"updateQty",
+        payload:{product,qty}
     }
 }
-export const decQty=(product)=>{
-    return {
-        type:"decQty",
-        payload:product
-    }
-}
+
 export const deletCartItem=(product)=>{
     return {
         type:"DeletCartItem",

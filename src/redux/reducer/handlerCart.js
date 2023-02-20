@@ -24,16 +24,11 @@ const handleCart = (state = cart, action) => {
             }
             break;
 
-        case "IncQty":
-            const itemExistIncQty = state.find(x => x.id === product.id);
+        case "updateQty":
+            const itemExistIncQty = state.find(x => x.id === product?.product.id);
             if (itemExistIncQty) {
-                return state.map(x => x.id === product.id ? { ...x, qty: x.qty + 1 } : x);
-            }
-            break;
-        case "decQty":
-            const itemExistdecQty = state.find(x => x.id === product.id);
-            if (itemExistdecQty) {
-                return state.map(x => x.id === product.id ? { ...x, qty: x.qty - 1 } : x);
+                let updatedQty=(product.qty > 0)?product.qty:1;
+                return state.map(x => x.id === product?.product.id ? { ...x, qty: updatedQty} : x);
             }
             break;
         case "DeletCartItem":
