@@ -7,7 +7,6 @@ import {setCoupan,removeCoupan,deletCartItem,updateQty} from '../redux/action'
 function Cart(props) {
   const displatch = useDispatch();
   const coupanDetails = useSelector(state => state.handleCoupan);
-  //console.log('test coupan:-',coupanDetails)
   const [coupanCode,setCoupanCode]=useState();
   const cartDetails = useSelector(state => state.handleCart);
   const [total,setTotal]=useState(totalPrice(cartDetails));
@@ -52,9 +51,10 @@ useEffect(()=>{
     )
 
   }
-  return (
-    <>
-      {cartDetails.length ? (<div className="container px-3 my-5 clearfix">
+  const CartInfo = () => {
+    return (
+      <>
+        <div className="container px-3 my-5 clearfix">
           {/* Shopping cart table */}
           <div className="card">
             <div className="card-header text-center">
@@ -100,14 +100,13 @@ useEffect(()=>{
               <div className="d-flex flex-wrap justify-content-between align-items-center pb-4">
                 <div className="d-flex">
                 <div className={`text-left ${isMobile?'':'me-5'} mt-4 coupan_sec`}>
-                {coupanDetails.status && <p>Coupan Code: <i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}<button onClick={()=>removeCoupanCode()} className='ms-2 btn btn-danger  fa fa-close'></button></p>}
-                {coupanDetails.status===false && <p style={{color:'red'}}>{`Coupan code is Invalid!`}<button onClick={()=>removeCoupanCode()} className='ms-2 btn btn-danger  fa fa-close'></button></p>}
-                  <input type="text" placeholder="coupan code" className="coupan py-2 border-1 rounded me-2"   value={coupanCode} onChange={(e)=>setCoupanCode(e.target.value)} />
+                {coupanDetails.cost && <p>Coupan Code: <i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}<button onClick={()=>removeCoupanCode()} className='ms-2 btn btn-danger  fa fa-close'></button></p>}
+                  <input type="text" placeholder="coupan code" className="coupan py-2 border-1 rounded me-2"  value={coupanCode}  onChange={(e)=>setCoupanCode(e.target.value)} />
                   <button disabled ={coupanDetails.cost > 0}className='coupanBtn btn btn-outline-dark' onClick={()=>appyCoupan()}>Apply coupan</button>
                 </div>
                 </div>
                 <div className="d-flex">
-                 {coupanDetails.status && (<div className="text-right mt-4 mr-5">
+                 {coupanDetails.cost && (<div className="text-right mt-4 mr-5">
                     <label className="text-muted font-weight-normal me-5">Discount</label>
                     <div className="text-large"><strong><i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}</strong></div>
                   </div>)}
@@ -126,7 +125,14 @@ useEffect(()=>{
                 <NavLink className="btn btn-outline-dark" to='/checkout'>Checkout</NavLink>
               </div>
         </div>
-        </div>) : (<BlanckCart />)}
+        </div>
+     
+      </>
+    )
+  }
+  return (
+    <>
+      {cartDetails.length ? (<CartInfo />) : (<BlanckCart />)}
     </>
   )
 }

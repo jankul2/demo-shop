@@ -35,6 +35,10 @@ const handleCart = (state = cart, action) => {
             const itemExistDeletCartItem = state.find(x => x.id === product.id);
             return state.filter(x => x.id !== itemExistDeletCartItem.id);
             break;
+        case "clearCart":
+                console.log('clearCart:-',state);
+                return [];
+                break;    
         default:
             return state;
 

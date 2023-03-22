@@ -12,7 +12,7 @@ export function loadState() {
 
 export async function saveState(state) {
   try {
-    console.log('storage:-',state)
+   // console.log('storage:-',state)
     const serializedState = JSON.stringify({handleCart:state});
     localStorage.setItem(KEY, serializedState);
   } catch (e) {
@@ -20,7 +20,7 @@ export async function saveState(state) {
   }
 }
 export async function setCoupan(state){
-  console.log('coupan set',state)
+  //console.log('coupan set',state)
   const serializedState = JSON.stringify(state);
   sessionStorage.setItem(KEY_COUPAN, serializedState);
 }

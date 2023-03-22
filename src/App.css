@@ -4,7 +4,30 @@ body{
   background:#eee;
   font-size: 14px !important;
 }
+.error{
+  color:red;
+}
+.bg_background{
+  background:#c35185ed;
+}
+.banner_img{
+  height: 600px;
+}
 /* Navbar */
+img.logo {
+  width: 76px;
+  height: auto;
+  object-fit: cover;
+}
+a.btn-footer {
+  color: #fff;
+}
+.btn-footer:hover {
+  text-decoration: none;
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
 .navbar-nav a{
   font-size: 17px;;
   text-decoration: none;
@@ -12,6 +35,9 @@ body{
 input, select{
   height: 37px;
 }
+/* .navbar-nav .nav-item,.navbar-nav .myaccount, .navbar-nav .cart-item {
+  margin-top: 16px;
+} */
 .latest-product{
   text-align: center!important;
     font-family: 'Poppins', sans-serif;
@@ -25,7 +51,7 @@ input, select{
 a.text-center.go_cart {
   width: 100%;
 }
-ul.dropdown-menu.dropdown-cart li {
+ul.dropdown-navbar-nav.dropdown-cart li {
   font-size: 14px;
 }
 .card-img-top {
@@ -45,7 +71,7 @@ a.text-center.go_cart {
   border-radius: 0;
   margin: 10px 0px 10px 10px;
 }
-li.nav-item a.active{
+.navbar-nav a.nav-link.active{
   border-bottom: 2px solid #212529;
   color: #212529 !important;
 }
@@ -106,27 +132,55 @@ i.fa.fa-inr {
 footer h6:after {
 position: absolute;
 content: "";
-background: grey;
+background: #fff;
 width: 12%;
 height: 1px;
 left: 0;
 bottom: -20px;
 }
 .btn-footer {
-          text-decoration: none;
-          border: 1px solid;
-          border-radius: 43px;
-          font-size: 13px;
-          padding: 7px 30px;
-          line-height: 47px;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 43px;
+  font-size: 13px;
+  padding: 7px 30px;
+  line-height: initial;
+  margin: 4px 0px;
+  display: inline-block;
 }
 span.item-left img {
   width: 38px;
 }
-.btn-footer:hover {
-          
-          text-decoration: none;
-         
+.btn-footer:hover {         
+  text-decoration: none;        
+}
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+i.fa.fa-shopping-cart.me-1,i.fa.fa-user-plus.me-1 {
+  font-size: 25px;
+  padding: 0px 10px;
+}
+#lblCartCount {
+  font-size: 12px;
+  background: #e700ffed;
+  color: #fff;
+  vertical-align: top;
+  position: relative;
+  top: -39px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50% 50%;
+  right: -29px;
 }
 .form-footer input[type="text"] {
   border: none;
@@ -135,10 +189,13 @@ outline: none;
 padding-left: 10px;
 
 }
+.navbar-nav .nav-item {
+  padding: 0px 16px;
+}
 li.nav-item {
   padding: 10px;
 }
-li.nav-item a.nav-link {
+.navbar-nav a.nav-link {
   padding: 0px !important;
 }
 li.nav-item a.active {
@@ -198,7 +255,7 @@ height: 100%;
 ul.dropdown-cart {
   min-width: 250px;
   margin: 0;
-  margin-top: 0;
+  top: 63px;
   display: block;
   padding: 5px 0px 0px 0px;
   z-index: 9999999;
@@ -445,7 +502,77 @@ button{
 		width: 100%;
 	}
 }
+.about p{
+  line-height: 2em;
+}
+@media screen and (max-width:767px){
+  .coupan_sec {
+    width: 100% !important;
+    padding: 24px 16px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+.msite_content p {
+  font-size: 13px !important;
+}
+.msite_content h5 {
+  font-size: 22px !important;
+  text-transform: uppercase;
+}
+.coupan_sec input {
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: start;
+}
+button.coupanBtn {
+  width: 100%;
+}
+  .navbar-nav a.nav-link {
+    padding: 10px !important;
+    text-align: center;
+    text-align-last: justify;
+  }
+  .footer_menu li a:hover{
+    color:#000;
+  }
+  .btn-footer {
+    margin: 14px 0px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  ul.footer_menu li {
+    margin-right: 10px;
+    display: inline-block;
+}
+ul.footer_menu {
+  width: 100%;
+}
 
+  .banner_img {
+    height: 300px;
+    object-fit: cover;
+}
+  .navbar-nav .nav-item {
+    padding: 0px;
+}
+.navbar-nav a.nav-link.active {
+  border-bottom: none;
+  color: #212529 !important;
+}
+#lblCartCount {
+  font-size: 12px;
+  background: #e700ffed;
+  color: #fff;
+  vertical-align: top;
+  position: relative;
+  top: -51px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50% 50%;
+  right: -39px;
+}
+}
 @media screen and (max-height: 660px){
 	.content{
 		align-items: flex-start;
@@ -477,15 +604,5 @@ button{
         transition: opacity 0.3s ease-in-out;
     }
 
-    nav div a {
-        color: white;
-        text-decoration: none;
-        display: inline-block;
-        font-weight: 300;
-        letter-spacing: 1.5;
-        width: 100%;
-        margin-bottom: 31px;
-        text-align: center;
-        font-size: 38px;
-    }
+
 }
