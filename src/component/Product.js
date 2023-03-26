@@ -11,18 +11,22 @@ function Product() {
     const [cartProduct, setCartProduct] = useState({});
     const dispatch=useDispatch();
     const notificationMessage = (product) => { 
-        console.log('cart added',product);
-        setAlertVisible(true)
+        //console.log('cart added',product);
+        setAlertVisible(true);
         setTimeout(() => { 
             setAlertVisible(false)
         }, 4000);
         setCartProduct({"productName":product.title,"qty":product.qty})
+        window.scrollTo(0, 0);
     } 
     const addProduct=(product)=>{
-        console.log(product);
+        //console.log(product);
         dispatch(addCart(product));
         notificationMessage(product);
     }
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
     useEffect(() => {
         const getProducts = async () => {
             setLoading(true);

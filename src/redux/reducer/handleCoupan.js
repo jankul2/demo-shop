@@ -4,10 +4,11 @@ export const handleCoupan = (state = coupan, action) => {
     const coupan = action.payload;
     switch (action.type) {
         case "setCoupan":
-            return { ...action.payload, cost: getCoupanPrice(coupan.coupan) };
+            let coupanObj=getCoupanPrice(coupan.coupan);
+            return { ...action.payload, cost: coupanObj.cost,status:coupanObj.status};
+            //return { ...action.payload, cost: getCoupanPrice(coupan.coupan) };
             break;
         case "deleteCoupan":
-            console.log('delete working!')
             return {};
             break;
 
@@ -19,8 +20,8 @@ export const handleCoupan = (state = coupan, action) => {
 function getCoupanPrice(code) {
     console.log('code', code)
     if (code == 'test') {
-        return 10;
+        return {cost:10,status:true};
     } else {
-        return false;
+        return {cost:0,status:false};
     }
 }

@@ -20,6 +20,11 @@ export const deletCartItem=(product)=>{
         payload:product
     }
 }
+export const clearCart=()=>{
+    return {
+        type:"clearCart",
+    }
+}
 export const setCoupan=(coupan)=>{
     return {
         type:"setCoupan",
