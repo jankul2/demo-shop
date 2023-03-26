@@ -7,10 +7,21 @@ function Product() {
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [visibleAlert, setAlertVisible] = useState(false);
+    const [cartProduct, setCartProduct] = useState({});
     const dispatch=useDispatch();
+    const notificationMessage = (product) => { 
+        console.log('cart added',product);
+        setAlertVisible(true)
+        setTimeout(() => { 
+            setAlertVisible(false)
+        }, 4000);
+        setCartProduct({"productName":product.title,"qty":product.qty})
+    } 
     const addProduct=(product)=>{
         console.log(product);
-        dispatch(addCart(product))
+        dispatch(addCart(product));
+        notificationMessage(product);
     }
     useEffect(() => {
         const getProducts = async () => {
@@ -20,6 +31,9 @@ function Product() {
             setLoading(false);
         }
         getProducts();
+/*         return () => {
+            notificationMessage();
+        }; */
     }, []);
     const Loading = () => {
         return (
@@ -74,6 +88,10 @@ function Product() {
     return (
         <div>
             <div className="container py-5">
+            {visibleAlert && (<div className="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>{cartProduct?.productName} </strong> product is added in cart.
+                <button type="button" className="btn-close" onClick={()=>setAlertVisible(false)} data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>)}
                 <div className="row py-4">
                     {loading ? <Loading /> : <ShowProduct />}
                 </div>

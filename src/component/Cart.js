@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { useDispatch, useSelector,connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { totalPrice } from '../services/helper';
-import {setCoupan,removeCoupan} from '../redux/action'
+import {setCoupan,removeCoupan,deletCartItem,updateQty} from '../redux/action'
 function Cart(props) {
   const displatch = useDispatch();
   const coupanDetails = useSelector(state => state.handleCoupan);
@@ -12,15 +12,23 @@ function Cart(props) {
   let appyCoupan=()=>{
     displatch(setCoupan({coupan:coupanCode,cost:0}))
     setCoupanCode(''); 
+    //setTotal(totalPrice(cartDetails));
   }
   let removeCoupanCode=()=>{
     displatch(removeCoupan());
+    
   }
-  useEffect(()=>{
-    setTotal(totalPrice(cartDetails));
-  },[coupanDetails])
-
-   const BlanckCart = () => {
+const deleteCart=(product)=>{
+    displatch(deletCartItem(product));
+ }
+  let handileCartUpdate=(product,qty)=>{
+    //updatedQty
+    displatch(updateQty(product,qty));
+  }
+useEffect(()=>{
+  setTotal(totalPrice(cartDetails));
+},[coupanDetails,cartDetails])
+  const BlanckCart = () => {
     return (
       <>
         <div className="container px-3 my-5 clearfix">
@@ -39,7 +47,7 @@ function Cart(props) {
     )
 
   }
-  const Cart = () => {
+  const CartInfo = () => {
     return (
       <>
         <div className="container px-3 my-5 clearfix">
@@ -65,19 +73,19 @@ function Cart(props) {
 
                     {cartDetails.map(cart =>
                       <tr key={cart.id}>
-                        <td className="p-4">
+                        <td className="ps-4">
                           <div className="media align-items-center d-flex flex-wrap ">
                             <img src={cart.image} className="d-block ui-w-40 ui-bordered mr-4" alt={cart.title} />
                             <div className="media-body p-4">
-                              <NavLink to="/#" className="d-block text-dark">{cart.title}</NavLink>
+                              <NavLink to={`/products/${cart.id}`} className="d-block text-dark">{cart.title}</NavLink>
                       
                             </div>
                           </div>
                         </td>
                         <td className="text-right font-weight-semibold align-middle p-4"><i className="fa fa-inr" aria-hidden="true"></i>{cart.price}</td>
-                        <td className="align-middle p-4"><input type="text" className="form-control text-center" defaultValue={cart.qty} /></td>
-                        <td className="text-right font-weight-semibold align-middle p-4"><i className="fa fa-inr" aria-hidden="true"></i>{cart.price*cart.qty}</td>
-                        <td className="text-center align-middle px-4"><button className="btn btn-danger  fa fa-close"></button></td>
+                        <td className="align-middle p-4"><input type="number" min={1} className="form-control text-center" onChange={(e)=>handileCartUpdate(cart,e.target.value)} value={cart.qty} /></td>
+                        <td className="text-right font-weight-semibold align-middle p-4"><i className="fa fa-inr" aria-hidden="true"></i>{(cart.price*cart.qty).toFixed(2)}</td>
+                        <td className="text-center align-middle px-4"><button className="btn btn-danger  fa fa-close" onClick={()=>deleteCart(cart)} ></button></td>
                       </tr>
                     )}
                   </tbody>
@@ -87,9 +95,9 @@ function Cart(props) {
               <div className="d-flex flex-wrap justify-content-between align-items-center pb-4">
                 <div className="d-flex">
                 <div className="text-left mt-4 me-5">
-                {coupanDetails.cost && <p>Coupan Code: <i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}<button onClick={()=>removeCoupanCode()} className='ms-2 fa fa-close'></button></p>}
-                  <input type="text" placeholder="coupan code" className="coupan py-2 border-1 rounded mr-2" autoFocus="autoFocus" value={coupanCode} onChange={(e)=>setCoupanCode(e.target.value)} />
-                  <button disabled ={coupanDetails.cost > 0}className='btn btn-outline-dark me-2' onClick={()=>appyCoupan()}>Apply coupan</button>
+                {coupanDetails.cost && <p>Coupan Code: <i className="fa fa-inr" aria-hidden="true"></i>{coupanDetails.cost}<button onClick={()=>removeCoupanCode()} className='ms-2 btn btn-danger  fa fa-close'></button></p>}
+                  <input type="text" placeholder="coupan code" className="coupan py-2 border-1 rounded me-2" autoFocus="autoFocus" value={coupanCode} onChange={(e)=>setCoupanCode(e.target.value)} />
+                  <button disabled ={coupanDetails.cost > 0}className='btn btn-outline-dark' onClick={()=>appyCoupan()}>Apply coupan</button>
                 </div>
                 </div>
                 <div className="d-flex">
@@ -103,19 +111,23 @@ function Cart(props) {
                   </div>
                 </div>
               </div>
-              <div className="float-right">
-                <button type="button" className="btn btn-outline-dark me-3">Back to shopping</button>
-                <button type="button" className="btn btn-outline-dark">Checkout</button>
-              </div>
+             
             </div>
           </div>
+          <div className="card my-5 py-5">
+          <div className="text-end me-4">
+                <NavLink className="btn btn-outline-dark me-3" to='/products'>Back to shopping</NavLink>
+                <NavLink className="btn btn-outline-dark" to='/checkout'>Checkout</NavLink>
+              </div>
         </div>
+        </div>
+     
       </>
     )
   }
   return (
     <>
-      {cartDetails.length ? (<Cart />) : (<BlanckCart />)}
+      {cartDetails.length ? (<CartInfo />) : (<BlanckCart />)}
     </>
   )
 }

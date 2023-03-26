@@ -50,7 +50,7 @@ function Products() {
     const ShowProduct = () => {
         return (
             <>
-                <div className="buttons d-flex justfy-content-center mb-5">
+                <div className="buttons d-flex justfy-content-center mb-5" >
                     <button onClick={()=>setFilter(data)} className="btn btn-outline-dark me-2">
                         All
                     </button>
@@ -68,7 +68,7 @@ function Products() {
                     </button>
                 </div>
                 {filter.map(product =>(
-                         <div  key={product.id} className="col-md-3 col-4 mb-4">
+                         <div  key={product.id} className="col-md-3 mb-4 px-2">
                                 <div className="card  text-center p-4">
                                     <img src={product.image} className="card-img-top"  alt={product.title}/>
                                         <div className="card-body">
@@ -90,11 +90,12 @@ function Products() {
                     <div className="col-12 mb-5">
                         <h1 className='latest-product fw-bolder text-center'>Latest Products</h1>
                     </div>
+                    </div>
                     <hr />
                     <div className="row justify-content-center">
                         {loading ? <Loading /> : <ShowProduct />}
                     </div>
-                </div>
+                
             </div>
         </div>
     )
