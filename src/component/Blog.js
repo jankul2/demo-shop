@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Skeleton from 'react-loading-skeleton';
+const NEWSKEY='0411669c509b42cc94fbe9435887421d';
 function Blog() {
     const [blogInfo, setBlogInfo] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ function Blog() {
     useEffect(() => {
         const getBlog = async () => {
             setLoading(true);
-            const response = await fetch('https://dummyjson.com/posts?limit=28');
+            const response = await fetch('https://newsapi.org/v2/top-headlines?country=in&apiKey=0411669c509b42cc94fbe9435887421d');
             if (componentMounted) {
                 let BlogDetails= await response.json();
                 //console.log('testData',BlogDetails)
@@ -51,17 +52,17 @@ function Blog() {
       )
   }
   let BlogShow=()=>{
-
+console.log('blogInfo',blogInfo)
     return (
       <>
-      {blogInfo.posts && blogInfo.posts.map((item, idx) => (
+      {blogInfo?.articles && blogInfo?.articles.map((item, idx) => (
       <Col key={idx}>
         <Card>
-          <Card.Img variant="top" src="../assets/blog.jpg" />
+          <Card.Img variant="top" src={item.urlToImage} />
           <Card.Body>
             <Card.Title>{item.title}</Card.Title>
             <Card.Text>
-            {`${item.body.substr(0,120)}...`}
+            {/* {`${item['description'].substring(0,120)}`} */}
             </Card.Text>
           </Card.Body>
         </Card>

@@ -56,8 +56,9 @@ ul.dropdown-navbar-nav.dropdown-cart li {
 }
 .card-img-top {
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   height: 150px;
+  object-position: top center;
 }
 li.nav-item a:hover {
   border-bottom: 4px solid #212529;
